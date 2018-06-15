@@ -69,7 +69,7 @@
           <name><b>HyperE: Hyperbolic Embeddings for Entities</b></name>          
         </p>
         <p align="center">
-          Beliz Gunel, Fred Sala, Albert Gu, Christopher R&#233       
+          <i>Beliz Gunel, Fred Sala, Albert Gu, Christopher R&#233</i>       
         </p>
 
 
@@ -79,22 +79,19 @@
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
       <tr>
 
+
         <td width="20%">
-        <img src="hyperbolic.gif">
+        <img src="pytorch_cycle.gif">
         </td>
         <td width="80%" valign="middle">
 
-        <p>Hyperbolic embeddings have captured the attention of the machine learning community through <a href="https://arxiv.org/pdf/1705.08039.pdf">two exciting</a> <a href="https://arxiv.org/pdf/1705.10359.pdf"> recent proposals</a>. The motivation is to embed structured, discrete objects such as knowledge graphs in a way that can be used with modern machine learning methods. Hyperbolic embeddings can preserve graph distances and complex relationships in few dimensions, particularly for hierarchical graphs like trees. We provide a brief introduction both to hyperbolic geometry and to our previous work in this <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">blogpost</a>. In our <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>, we present new approaches for solving the underlying optimization problems and show tradeoffs for each of these approaches.
+        <p>Hyperbolic embeddings have captured the attention of the machine learning community through <a href="https://arxiv.org/pdf/1705.08039.pdf">two exciting</a> <a href="https://arxiv.org/pdf/1705.10359.pdf"> recent proposals</a>. The motivation is to embed structured, discrete objects such as knowledge graphs in a way that can be used with modern machine learning methods. Hyperbolic embeddings can preserve graph distances and complex relationships in very few dimensions, particularly for hierarchical graphs. We provide a brief introduction both to hyperbolic geometry and to our previous work in this <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">blogpost</a>. In our previous <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>, we present new approaches for solving the underlying optimization problems and show tradeoffs for each of these approaches.
         <p>
-          
-        </p>
-        <p align=center>
-          <a href="mailto:jonbarron@gmail.com">Email</a> &nbsp/&nbsp
-          <a href="JonBarron-CV.pdf">CV</a> &nbsp/&nbsp
-          <a href="JonBarron-bio.txt">Biography</a> &nbsp/&nbsp
-          <a href="https://scholar.google.com/citations?hl=en&user=jktWnL8AAAAJ">Google Scholar</a> &nbsp/&nbsp
-          <a href="http://www.linkedin.com/in/jonathanbarron/"> LinkedIn </a>
-        </p>
+
+        <p>In HyperE project, we embed chosen hierarchies from <a href="https://wordnet.princeton.edu/"> Wordnet</a>, <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> and <a href="https://musicbrainz.org/">MusicBrainz</a> in hyperbolic space and evaluate the intrinsic quality of the embeddings through hyperbolic-analog of "similarity" and "analogy". We use our combinatorial construction algorithm and a PyTorch-based optimization for all of our embeddings. Preliminary code for the embedding algorithms is publicly available <a href="https://github.com/HazyResearch/hyperbolics">here</a>. Our selected 10-dimensional entity embeddings are available to download in <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> format <a href="hyperE.wn.10d.zip">here</a>. Our PyTorch-based optimization embedding a graph with a cycle is shown on the left.
+
+
+        <p>  
         </td>
 
       </tr>
@@ -102,61 +99,131 @@
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
       <tr>
         <td width="50%" valign="middle">
-          <heading>Research</heading>
+          <heading>Intrinsic Results</heading>
           <p>
-          I'm interested in computer vision, machine learning, statistics, optimization, image processing, virtual reality, and computational photography. Much of my research is about inferring the physical world (shape, depth, motion, paint, light, colors, etc) from images. I have also worked in astronomy and biology. Representative papers are <span class="highlight">highlighted</span>.
+          <b>Analogy</b>     
           </p>
+
+      <p>
+      State-of-the-art word embeddings used in many natural language processing applications successfully encode the semantic relationships between words in the Euclidean space. One of the main intrinsic evaluation tasks for word embeddings is "word analogy", which consists of questions like "Athens is to Greece as Berlin is to <i>what?</i>" GloVe model answers the question "a is to b as c is to <i>what?</i>" by finding the word d whose word embedding e<sub>d</sub> is closest to the vector e<sub>b</sub>&#45e<sub>a</sub>&#43e<sub>c</sub> according to <a href=\"https://en.wikipedia.org/wiki/Cosine_similarity\">cosine similarity</a>.
+      <p>
+
+      <p> We define the analogous linear operations in hyperbolic space and use the hyperbolic distance as the similarity metric. In other words, we output the vector e<sub>d</sub>  that has the smallest hyperbolic distance to the hyperbolic-analog of e<sub>b</sub>&#45e<sub>a</sub>&#43e<sub>c</sub>. We extend this analogy experiment to the entity hierarchies in Wikidata and include some samples for different types of relationships in the following. For reference, these entity embeddings were produced using our combinatorial approach with 10 dimensions and 64 bits of precision. 
+      <p>
+      <br/>
+      <center>
+      <table border=\"1\">
+        <tr>
+          <td><b>Knowledge Graph</b></td>
+          <td><b>Relationship</b></td>
+          <td><b>e<sub>a</sub></b></td>
+          <td><b>e<sub>b</sub></b></td>
+          <td><b>e<sub>c</sub></b></td>
+          <td><b>Top Prediction</b></td>
+      
+
+        <tr>
+          <td>Wordnet</td>
+          <td>Hypernym</td>
+          <td>guitarist</td>
+          <td>musician</td>
+          <td>novelist</td>
+          <td>musician</td>
+        </tr>
+        <tr>
+          <td>Wordnet</td>
+          <td>Domain Topic</td>
+          <td>fluorocarbon</td>
+          <td>chemistry</td>
+          <td>angular velocity</td>
+          <td>physics</td>
+        </tr>
+        <tr>
+          <td>Wikidata</td>
+          <td>Student of</td>
+          <td>Eubilides</td>
+          <td>Euclides</td>
+          <td>Dicaearchus</td>
+          <td>Aristotle</td>
+        </tr>
+        <tr>
+          <td>Wikidata</td>
+          <td>Part of</td>
+          <td>Malaysia</td>
+          <td>Asia</td>
+          <td>Amazon Rainforest</td>
+          <td>South America</td>
+        </tr>
+    </table>
+    </center>
+      <br/>
+      <br/>
+
+    <b>Preserving Relationships</b>
+
+    <p>Hyperbolic space enables us to compress the relationship information in a knowledge graph to very few dimensions. We report precision and recall results for preserving relationships between entity pairs for several input relationship graphs. In this task, "correct" means the following: If an entity pair in the input graph is one edge away, hyperbolic distance between final entity embeddings stays 1(&#177 0.01). For reference, each of these embeddings were produced using our combinatorial approach with 64 bits of precision and 10 dimensions, and the largest connected component for each relationship in Wordnet was taken.
+    <p>
+    <br/>
+      <center>
+      <table border=\"1\">
+        <tr>
+          <td><b>Knowledge Graph</b></td>
+          <td><b>Relationship</b></td>
+          <td><b>Precision</b></td>
+          <td><b>Recall</b></td>
+      
+
+        <tr>
+          <td>Wordnet</td>
+          <td>Hypernym</td>
+          <td>98.11%</td>
+          <td>98.04%</td>
+
+        </tr>
+        <tr>
+          <td>Wordnet</td>
+          <td>Domain Topic</td>
+          <td>97.92%</td>
+          <td>98.42%</td>
+
+        </tr>
+        <tr>
+          <td>Wordnet</td>
+          <td>Member Holonym</td>
+          <td>99.43%</td>
+          <td>99.75%</td>
+
+        </tr>
+
+    </table>
+    </center>
+      <br/>
+
+
+          <p>  
         </td>
+
       </tr>
       </table>
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+      <tr>
+        <td width="50%" valign="middle">
+          <heading>Visualizations</heading>
+        <p> We inlude some visualizations for our different embedding approaches in the following. Left hand-side is embedding a simple tree using only PyTorch-based optimization while right hand-side is using our combinatorial construction for the same input graph. MAP refers to mean average precision, which is a metric that captures how well each vertex's neighborhoods are preserved. We include detailed analysis on these algorithms in our <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>.
 
-<!--   <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+ <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
 
 
-    <tr onmouseout="portrait_stop()" onmouseover="portrait_start()" >
-      <td width="25%">
-        <div class="one">
-        <div class="two" id = 'portrait_image'><img src='portrait_after.png'></div>
-        <img src='portrait_before.png'>
-        </div>
-        <script type="text/javascript">
-        function portrait_start() {
-        document.getElementById('portrait_image').style.opacity = "1";
-        }
-        function portrait_stop() {
-        document.getElementById('portrait_image').style.opacity = "0";
-        }
-        portrait_stop()
-        </script>
+      <td width="20%">
+      <img src="pytorch_tree.gif">
       </td>
-      <td valign="top" width="75%">
-	  <a href="https://drive.google.com/file/d/13i6DlS9UhGVKmwslLUFnKBwdxFRVQeQj/view?usp=sharing">
-            <papertitle>Synthetic Depth-of-Field with a Single-Camera Mobile Phone</papertitle>
-	  </a>
-	  <br>
-          <a href="http://people.csail.mit.edu/nwadhwa/">Neal Wadhwa</a>,
-          <a href="http://rahuldotgarg.appspot.com/">Rahul Garg</a>,
-          <a href="http://graphics.stanford.edu/~dejacobs/">David E. Jacobs</a>,
-          Bryan E. Feldman,
-          Nori Kanazawa,
-          Robert Carroll,
-          <a href="http://www.cs.cmu.edu/~ymovshov/">Yair Movshovitz-Attias</a>,
-          <strong>Jonathan T. Barron</strong>,
-          Yael Pritch,
-          <a href="http://graphics.stanford.edu/~levoy/">Marc Levoy</a> <br>
-        <em>SIGGRAPH</em>, 2018 <br>
-        <a href="https://arxiv.org/abs/1806.04171">arxiv</a>
-        / 
-        <a href="https://ai.googleblog.com/2017/10/portrait-mode-on-pixel-2-and-pixel-2-xl.html">blog post</a>
-        / 
-        <a href="Wadhwa2018.bib">bibtex</a>
-        <p></p>
-        <p>Dual pixel cameras and semantic segmentation algorithms can be used for shallow depth of field effects.</p>
-        <p>This system is the basis for "Portrait Mode" on the Google Pixel 2 smartphones</p>
+      <td valign="top" width="50%">
+      <img src="combinatorial_tree.gif">
       </td>
+  
     </tr>
 
-    <tr onmouseout="aperture_stop()" onmouseover="aperture_start()" >
+    <!-- <tr onmouseout="aperture_stop()" onmouseover="aperture_start()" >
       <td width="25%">
         <div class="one">
         <div class="two" id = 'aperture_image'><img src='aperture_after.jpg'></div>
