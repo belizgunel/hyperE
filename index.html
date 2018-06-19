@@ -88,7 +88,7 @@
         <p>Hyperbolic embeddings have captured the attention of the machine learning community through <a href="https://arxiv.org/pdf/1705.08039.pdf">two exciting</a> <a href="https://arxiv.org/pdf/1705.10359.pdf"> recent proposals</a>. The motivation is to embed structured, discrete objects such as knowledge graphs in a way that can be used with modern machine learning methods. Hyperbolic embeddings can preserve graph distances and complex relationships in very few dimensions, particularly for hierarchical graphs. We provide a brief introduction both to hyperbolic geometry and to our previous work in this <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">blogpost</a>. In our previous <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>, we present new approaches for solving the underlying optimization problems and show tradeoffs for each of these approaches.
         <p>
 
-        <p>In HyperE project, we embed chosen hierarchies from <a href="https://wordnet.princeton.edu/"> WordNet</a>, <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> and <a href="https://musicbrainz.org/">MusicBrainz</a> in hyperbolic space and evaluate the intrinsic quality of the embeddings through hyperbolic-analog of "similarity" and "analogy". We use our combinatorial construction algorithm and a PyTorch-based optimization for all of our embeddings. Preliminary code for the embedding algorithms is publicly available <a href="https://github.com/HazyResearch/hyperbolics">here</a>. Our selected 10-dimensional entity embeddings are available to download in <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> format <a href="hyperE.wn.10d.zip">here</a>. Our PyTorch-based optimization embedding a graph with a cycle is shown on the left.
+        <p>In HyperE project, we embed chosen hierarchies from <a href="https://wordnet.princeton.edu/"> WordNet</a>, <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> and <a href="https://musicbrainz.org/">MusicBrainz</a> in hyperbolic space and evaluate the intrinsic quality of the embeddings through hyperbolic-analog of "similarity" and "analogy". We use our combinatorial construction algorithm and a PyTorch-based optimization for all of our embeddings. Preliminary code for the embedding algorithms is publicly available <a href="https://github.com/HazyResearch/hyperbolics">here</a>. Our selected entity embeddings are available to download in <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> format below. Our PyTorch-based optimization embedding a graph with a cycle is shown on the left.
 
 
         <p>  
@@ -159,6 +159,50 @@
       <br/>
       <br/>
 
+
+          <b>Detecting Relations</b>     
+          </p>
+
+      <p>
+      In our music hierarchy embedding, songs-album edges have weight 2, and album-artist edges have weight 1. We can use these weights and the embedded hierarchy to detect relations by simply computing hyperbolic distances between embedded points. For example, the first two songs below are from the Beatles' "Sgt. Pepper's Lonely Hearts Club Band" album, and indeed the embedding expresses this relation. The next two songs are by the Beatles, but from different albums. Lastly, songs by the Rolling Stones and AC/DC are shown as unrelated (note the much larger distance).
+      <p>
+
+      <br/>
+      <center>
+      <table border=\"1\">
+        <tr>
+          <td><b>Song 1</b></td>
+          <td><b>Song 2</b></td>
+          <td><b>Distance</b></td>
+          <td><b>Relation</b></td>      
+
+        <tr>
+          <td>With a Little Help From My Friends</td>
+          <td>Lucy in the Sky With Diamonds</td>
+          <td>3.7609904083153136</td>
+          <td>Same album and artist</td>
+ 
+        </tr>
+        <tr>
+          <td>A Hard Day's Night</td>
+          <td>While My Guitar Gently Weeps</td>
+          <td>4.82352127627792</td>
+          <td>Same artist, different album</td>
+
+        </tr>
+        <tr>
+          <td>(I Can't Get No) Satisfaction</td>
+          <td>Back in Black</td>
+          <td>23.430368253892205</td>
+          <td>Unrelated</td>
+
+        </tr>
+
+    </table>
+    </center>
+      <br/>
+      <br/>
+
     <b>Preserving Relationships</b>
 
     <p>Hyperbolic space enables us to compress the relationship information in a knowledge graph to very few dimensions. We report precision and recall results for preserving relationships between entity pairs for several input relationship graphs. In this task, "correct" means the following: If an entity pair in the input graph is one edge away, hyperbolic distance between final entity embeddings stays 1(&#177 0.01). For reference, each of these embeddings were produced using our combinatorial approach with 64 bits of precision and 10 dimensions, and the largest connected component for each relationship in WordNet was taken.
@@ -205,25 +249,41 @@
 
       </tr>
       </table>
+
+
+
+
+
+
+
+
+
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
       <tr>
         <td width="50%" valign="middle">
           <heading>Visualizations</heading>
-        <p> We inlude some visualizations for our different embedding approaches in the following. Left hand-side is embedding a simple tree using only PyTorch-based optimization while right hand-side is using our combinatorial construction for the same input graph. MAP refers to mean average precision, which is a metric that captures how well each vertex's neighborhoods are preserved. We include detailed analysis on these algorithms in our <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>.
+        <p> We inlude some visualizations for our different embedding approaches in the following. Left hand-side is embedding a simple tree using only PyTorch-based optimization, which minimizes a loss function based on hyperbolic distance. For the same input graph, right-hand side is using our combinatorial construction, a deterministic algorithm that places tree vertices exactly. 
 
- <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <p> In Euclidean space, circle circumference and disc area grow linearly and quadratically with radius, respectively. However, in hyperbolic space, they both grow exponentially with respect to radius, which allows particularly efficient embeddings for hierarchical structures like trees. MAP refers to mean average precision, which is a metric that captures how well each vertex's neighborhoods are preserved. We include detailed analysis on these algorithms in our <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>.
 
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
 
-      <td width="20%">
-      <img src="pytorch_tree.gif">
-      </td>
-      <td valign="top" width="50%">
-      <img src="combinatorial_tree.gif">
-      </td>
+        <td width="20%">
+        <img src="pytorch_tree.gif">
+        </td>
+        <td valign="top" width="50%">
+        <img src="combinatorial_tree.gif">
+        </td>
   
-    </tr>
-		
-		
+      </tr>
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+      <tr>
+        <td width="50%" valign="middle">
+          <heading>Download</heading>
+
+    
+    
       </table>
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
       <tr>
@@ -249,15 +309,15 @@
         </script>
       </td>
       <td valign="top" width="75%">
-	  <a href="https://drive.google.com/open?id=1MpvxcW7OTJP321QL_q4ZLQ8D653bZZzy">
+    <a href="https://drive.google.com/open?id=1MpvxcW7OTJP321QL_q4ZLQ8D653bZZzy">
             <papertitle>Aperture Supervision for Monocular Depth Estimation</papertitle>
-	  </a>
-	  <br>
+    </a>
+    <br>
           <a href="https://people.eecs.berkeley.edu/~pratul/">Pratul P. Srinivasan</a>,
-	  <a href="http://rahuldotgarg.appspot.com/">Rahul Garg</a>,
-	  <a href="http://people.csail.mit.edu/nwadhwa/">Neal Wadhwa</a>,
-	  <a href="http://graphics.stanford.edu/~renng/">Ren Ng</a>,
-	  <strong>Jonathan T. Barron</strong> <br>
+    <a href="http://rahuldotgarg.appspot.com/">Rahul Garg</a>,
+    <a href="http://people.csail.mit.edu/nwadhwa/">Neal Wadhwa</a>,
+    <a href="http://graphics.stanford.edu/~renng/">Ren Ng</a>,
+    <strong>Jonathan T. Barron</strong> <br>
         <em>Computer Vision and Pattern Recognition (CVPR)</em>, 2018 <br>
         <a href="https://github.com/google/aperture_supervision">code</a>
         / 
@@ -266,7 +326,7 @@
         <p>Varying a camera's aperture provides a supervisory signal that can teach a neural network to do monocular depth estimation.</p>
       </td>
     </tr>
-		
+    
     <tr onmouseout="deepburst_stop()" onmouseover="deepburst_start()" >
       <td width="25%">
         <div class="one">
@@ -302,7 +362,7 @@
         <p>We train a network to predict linear kernels that denoise noisy bursts from cellphone cameras.</p>
       </td>
     </tr>
-	  
+    
     <tr onmouseout="friendly_stop()" onmouseover="friendly_start()" >
       <td width="25%">
         <div class="one">
@@ -372,7 +432,7 @@
           <papertitle>A More General Robust Loss Function</papertitle></a><br>
           <strong>Jonathan T. Barron</strong> <br>
           <em>arXiv Preprint</em>, 2017 <br>
-	  <p></p>
+    <p></p>
           <p>A single robust loss function is a superset of many other common robust loss functions.</p>
         </td>
       </tr>
@@ -413,7 +473,7 @@
         <a href="https://9to5google.com/2017/03/03/google-photos-auto-white-balance/">p</a><a href="https://www.engadget.com/2017/03/03/google-photos-automatically-fixes-your-pictures-white-balance/">r</a><a href="https://lifehacker.com/google-photos-will-now-automatically-adjust-the-white-b-1793009155">e</a><a href="https://petapixel.com/2017/03/06/google-photos-will-now-automatically-white-balance-snapshots/">s</a><a href="http://www.theverge.com/2017/3/3/14800062/google-photos-auto-white-balance-android">s</a>
         <p></p>
         <p>Color space can be aliased, allowing white balance models to be learned and evaluated in the frequency domain. This improves accuracy by 13-20% and speed by 250-3000x.</p>
-	<p>This technology is used by <a href="https://photos.google.com/">Google Photos</a>. </p>
+  <p>This technology is used by <a href="https://photos.google.com/">Google Photos</a>. </p>
       </td>
     </tr>
 
@@ -520,10 +580,10 @@
                 <a href="https://drive.google.com/file/d/0B4nuwEMaEsnmdEREcjhlSXM2NGs/view?usp=sharing">supplement</a>
                 /
                 <a href="BarronPooleECCV2016.bib">bibtex</a>
-		/
-		<a href="http://videolectures.net/eccv2016_barron_bilateral_solver/">video (they messed up my slides, use &rarr;)</a>
-		/
-		<a href="https://drive.google.com/file/d/19x1AeN0PFus6Pjrd8nR-vCmJ6bNEefsC/view?usp=sharing">keynote</a> (or <a href="https://drive.google.com/file/d/1p9nduiymK9jUh7WfwlsMjBfW8RoNe_61/view?usp=sharing">PDF</a>)
+    /
+    <a href="http://videolectures.net/eccv2016_barron_bilateral_solver/">video (they messed up my slides, use &rarr;)</a>
+    /
+    <a href="https://drive.google.com/file/d/19x1AeN0PFus6Pjrd8nR-vCmJ6bNEefsC/view?usp=sharing">keynote</a> (or <a href="https://drive.google.com/file/d/1p9nduiymK9jUh7WfwlsMjBfW8RoNe_61/view?usp=sharing">PDF</a>)
                 /
                 <a href="https://github.com/poolio/bilateral_solver">code</a>
                 /
@@ -1142,14 +1202,14 @@
           <a href="http://shamak.github.io/">&#10025;</a>
           <a href="http://jianfeng.us/">&#10025;</a>
           <a href="https://pulkitkumar95.github.io/">&#10025;</a>
-	  <a href="https://epiception.github.io/">&#10025;</a>
-	  <a href="https://weimengpu.github.io/">&#10025;</a>
-	  <a href="http://users.ices.utexas.edu/~faraz/">&#10025;</a>
-	  <a href="https://vitorgodeiro.github.io/">&#10025;</a>
-	  <a href="http://cgm.technion.ac.il/people/Roey/">&#10025;</a>
-	  <a href="https://mancinimassimiliano.github.io/">&#10025;</a>
-	  <a href="https://roshanjrajan.me/">&#10025;</a>
-	  </font>
+    <a href="https://epiception.github.io/">&#10025;</a>
+    <a href="https://weimengpu.github.io/">&#10025;</a>
+    <a href="http://users.ices.utexas.edu/~faraz/">&#10025;</a>
+    <a href="https://vitorgodeiro.github.io/">&#10025;</a>
+    <a href="http://cgm.technion.ac.il/people/Roey/">&#10025;</a>
+    <a href="https://mancinimassimiliano.github.io/">&#10025;</a>
+    <a href="https://roshanjrajan.me/">&#10025;</a>
+    </font>
         </p>
         </td>
       </tr>
