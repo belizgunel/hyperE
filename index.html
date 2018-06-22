@@ -59,7 +59,7 @@
     }
   </style>
 <!--   <link rel="icon" type="image/png" href="seal_icon.png">
- -->  <title>Beliz Gunel</title>
+ -->  <title>HyperE</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   </head>
@@ -81,21 +81,28 @@
 
 
         <td width="20%">
-        <img src='pc.svg' style="width:300px;height:300px;">
+        <img src="poincare_resized.png">
         </td>
         <td width="65%" valign="middle">
 
-        <p>Hyperbolic embeddings have captured the attention of the machine learning community through proposals from <a href="https://arxiv.org/pdf/1705.08039.pdf">Nickel&Kiela</a> and <a href="https://arxiv.org/pdf/1705.10359.pdf"> Chamberlain et al.</a> The motivation is to embed structured, discrete objects such as knowledge graphs in a way that can be used with modern machine learning methods. Hyperbolic embeddings can preserve graph distances and complex relationships in very few dimensions, particularly for hierarchical graphs. We provide a brief introduction both to hyperbolic geometry and to our previous work in this <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">blogpost</a>. In our previous <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>, we present new approaches for solving the underlying optimization problems and show tradeoffs for each of these approaches.
+        <p>Hyperbolic embeddings have captured the attention of the machine learning community through proposals from <a href="https://arxiv.org/pdf/1705.08039.pdf">Nickel&Kiela (2017)</a> and <a href="https://arxiv.org/pdf/1705.10359.pdf"> Chamberlain et al. (2017)</a>. The motivation is to embed structured, discrete objects such as knowledge graphs in a way that can be used with modern machine learning methods. Hyperbolic embeddings can preserve graph distances and complex relationships in very few dimensions, particularly for hierarchical graphs. We provide a brief introduction both to hyperbolic geometry and to our previous work in this <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">blogpost</a>. In our previous <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>, we present new approaches for solving the underlying optimization problems and show tradeoffs for each of these approaches.
         <p>
 
         <p>In HyperE project, we embed chosen hierarchies from <a href="https://wordnet.princeton.edu/"> WordNet</a>, <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> and <a href="https://musicbrainz.org/">MusicBrainz</a> in hyperbolic space and evaluate the intrinsic quality of the embeddings through hyperbolic-analog of "similarity" and "analogy". We use our combinatorial construction algorithm and a PyTorch-based optimization for all of our embeddings. Preliminary code for the embedding algorithms is publicly available <a href="https://github.com/HazyResearch/hyperbolics">here</a>. Our selected 10-dimensional entity embeddings are available to download in <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> format below. These entity embeddings can be further integrated into applications related to knowledge base completion or can be supplied as features into various NLP tasks such as Question Answering. On the left, you can see the <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_disk_model">Poincar&#233 disk</a> with hyperbolic parallel lines.
+        <p>
 
 
-        <p>  
+
         </td>
-
       </tr>
       </table>
+
+      <br/>
+      <br/>
+      <br/>
+
+
+
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
       <tr>
         <td width="50%" valign="middle">
@@ -254,10 +261,6 @@
 
 
 
-
-
-
-
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
       <tr>
         <td width="50%" valign="middle">
@@ -279,24 +282,71 @@
   
       </tr>
 
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+      <tr>
+        <td width="50%" valign="middle">
+          <heading>Related Work</heading>
+
+
+      <p> Our study of hyperbolic embeddings was motivated by recent works showing that hyperbolic representations are suitable for many hierarchies, with applications including the <a href="https://en.wikipedia.org/wiki/Question_answering">question answering (QA) </a> system HyperQA in <a href="https://arxiv.org/pdf/1707.07847.pdf">Tay et al. (2018)</a>, vertex classifiers in <a href="https://arxiv.org/pdf/1705.10359.pdf">Chamberlain et al. (2017)</a>, and link prediction in <a href="https://arxiv.org/pdf/1705.08039.pdf">Nickel&Kiela (2017)</a>. 
+      <p>
+      <p> Embedding entailment relations, i.e. directed acyclic graphs with hyperbolic cones as a heuristic was proposed in <a href="https://arxiv.org/pdf/1804.01882.pdf">Ganea et al. (2018)</a>. Hyperbolic word and sentence embeddings are studied by <a href="https://arxiv.org/pdf/1806.04313.pdf">Dhingra et al. (2018)</a>. Many of these works use the <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_disk_model">Poincar&#233 model</a> of hyperbolic geometry; <a href="https://arxiv.org/pdf/1804.03329.pdf">our work</a> and <a href="https://arxiv.org/pdf/1806.03417.pdf">Nickel&Kiela (2018)</a> suggest that other models, such as the <a href="https://en.wikipedia.org/wiki/Hyperboloid_model">hyperboloid model</a> of hyperbolic space, may be simpler for certain tasks. Of course, it is always possible to translate between models.  
+
+      <p> A pair of recent approaches seek to add hyperbolic operations to neural networks. <a href="https://arxiv.org/pdf/1805.09786.pdf">Gulcehre et al. (2018)</a> introduces a hyperbolic version of the <a href="https://arxiv.org/pdf/1706.03762.pdf">attention mechanism</a> using the hyperboloid model. In <a href="https://arxiv.org/pdf/1805.09112.pdf">Ganea et al. (2018a)</a>, building blocks from certain networks are generalized to operate with <a href="https://en.wikipedia.org/wiki/Riemannian_manifold">Riemannian manifolds</a>.
+      <p>
+
+      <p> Hyperbolic operations can also be applied to Support Vector Machines, as shown by <a href="https://arxiv.org/pdf/1806.00437.pdf">Cho et al. (2018)</a>. Finally, descent methods suitable for hyperbolic optimization have gained renewed research interest; such works include <a href="https://arxiv.org/pdf/1805.10487.pdf">Enokida et al. (2018)</a> for geodesic updates, <a href="https://arxiv.org/pdf/1806.02812.pdf">Zhang and Sra (2018)</a> for accelerated Riemannian gradient methods, and <a href="https://arxiv.org/pdf/1805.08207.pdf">Wilson&Leimeister (2018)</a> for performing gradient descent in hyperbolic space using the hyperboloid model.
+      <p> 
+
+      </td>
+      </tr>
+
+
+      </table>
+
+
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
       <tr>
         <td width="50%" valign="middle">
           <heading>Download</heading>
 
-          <p> You can download our 10-dimensional entity embeddings with 64-bit precision for selected relationships from WordNet, Wikidata and MusicBrainz in the following. All embeddings are in GloVe format, but we also include the scale factor for the embeddings in the top line. You can also find the preprocessing scripts to create edge lists for input graphs <a href="preprocess/">here</a>.
+          <p> You can download our 10-dimensional entity embeddings with 64-bit precision for selected relationships from WordNet, Wikidata and MusicBrainz in the following. All embeddings are in GloVe format, but we also include the scale factor for the embeddings in the top line. You can also find the preprocessing scripts to create edge lists for input graphs <a href="preprocess/">here</a>. You can also get started with our <a href="demo/">demo notebook</a>.
           <p> WordNet: <a href="hyperE.wn.10d.zip">hyperE.wn.10d.zip</a> 
           <p> Wikidata: <a href="hyperE.wikidata.10d.zip">hyperE.Wikidata.10d.zip</a> 
           <p> MusicBrainz: <a href="hypere.music.10d.zip">hyperE.MusicBrainz.10d.zip</a>
     
       </table>
+
+
+
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
       <tr>
-        <td>
+        <td width="50%" valign="middle">
+          <heading>Email us!</heading>
+
+          <p> This project is maintained by <a href="https://github.com/HazyResearch">HazyResearch</a>, as part of the  <a href="http://dawn.cs.stanford.edu/">Stanford DAWN</a> project. 
+          Send us an email <a href="mailto:bgunel@stanford.edu">here</a> for new potential applications or datasets you would like to see using HyperE until we release our engine. 
+
+        </table>
+
+
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+
+
+        <td valign="top" width="50%">
+          <p align="right">
+          <font size="1">
+          Website template credits to <a href="https://github.com/jonbarron/jonbarron_website"><strong>Jon Barron</strong></a>        </td>
+        </td>
+        </table>
+
+
+
+  
         <br>
-        <p align="right">
-          <font size="2">
-          Website template credits to <a href="https://github.com/jonbarron/jonbarron_website"><strong>Jon Barron</strong></a>
+
     <!-- <tr onmouseout="aperture_stop()" onmouseover="aperture_start()" >
       <td width="25%">
         <div class="one">
