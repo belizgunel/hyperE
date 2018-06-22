@@ -81,14 +81,14 @@
 
 
         <td width="20%">
-        <img src="pytorch_cycle.gif">
+        <img src="poincare_resized.png">
         </td>
-        <td width="80%" valign="middle">
+        <td width="65%" valign="middle">
 
-        <p>Hyperbolic embeddings have captured the attention of the machine learning community through <a href="https://arxiv.org/pdf/1705.08039.pdf">two exciting</a> <a href="https://arxiv.org/pdf/1705.10359.pdf"> recent proposals</a>. The motivation is to embed structured, discrete objects such as knowledge graphs in a way that can be used with modern machine learning methods. Hyperbolic embeddings can preserve graph distances and complex relationships in very few dimensions, particularly for hierarchical graphs. We provide a brief introduction both to hyperbolic geometry and to our previous work in this <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">blogpost</a>. In our previous <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>, we present new approaches for solving the underlying optimization problems and show tradeoffs for each of these approaches.
+        <p>Hyperbolic embeddings have captured the attention of the machine learning community through proposals from <a href="https://arxiv.org/pdf/1705.08039.pdf">Nickel&Kiela</a> and <a href="https://arxiv.org/pdf/1705.10359.pdf"> Chamberlain et al.</a> The motivation is to embed structured, discrete objects such as knowledge graphs in a way that can be used with modern machine learning methods. Hyperbolic embeddings can preserve graph distances and complex relationships in very few dimensions, particularly for hierarchical graphs. We provide a brief introduction both to hyperbolic geometry and to our previous work in this <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">blogpost</a>. In our previous <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>, we present new approaches for solving the underlying optimization problems and show tradeoffs for each of these approaches.
         <p>
 
-        <p>In HyperE project, we embed chosen hierarchies from <a href="https://wordnet.princeton.edu/"> WordNet</a>, <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> and <a href="https://musicbrainz.org/">MusicBrainz</a> in hyperbolic space and evaluate the intrinsic quality of the embeddings through hyperbolic-analog of "similarity" and "analogy". We use our combinatorial construction algorithm and a PyTorch-based optimization for all of our embeddings. Preliminary code for the embedding algorithms is publicly available <a href="https://github.com/HazyResearch/hyperbolics">here</a>. Our selected entity embeddings are available to download in <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> format below. Our PyTorch-based optimization embedding a graph with a cycle is shown on the left.
+        <p>In HyperE project, we embed chosen hierarchies from <a href="https://wordnet.princeton.edu/"> WordNet</a>, <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a> and <a href="https://musicbrainz.org/">MusicBrainz</a> in hyperbolic space and evaluate the intrinsic quality of the embeddings through hyperbolic-analog of "similarity" and "analogy". We use our combinatorial construction algorithm and a PyTorch-based optimization for all of our embeddings. Preliminary code for the embedding algorithms is publicly available <a href="https://github.com/HazyResearch/hyperbolics">here</a>. Our selected 10-dimensional entity embeddings are available to download in <a href="https://nlp.stanford.edu/projects/glove/">GloVe</a> format below. These entity embeddings can be further integrated into applications related to knowledge base completion or can be supplied as features into various NLP tasks such as Question Answering. On the left, you can see the <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_disk_model">Poincar&#233 disk</a> with hyperbolic parallel lines.
 
 
         <p>  
@@ -205,7 +205,7 @@
 
     <b>Preserving Relationships</b>
 
-    <p>Hyperbolic space enables us to compress the relationship information in a knowledge graph to very few dimensions. We report precision and recall results for preserving relationships between entity pairs for several input relationship graphs. In this task, "correct" means the following: If an entity pair in the input graph is one edge away, hyperbolic distance between final entity embeddings stays 1(&#177 0.01). For reference, each of these embeddings were produced using our combinatorial approach with 64 bits of precision and 10 dimensions, and the largest connected component for each relationship in WordNet was taken.
+    <p>Hyperbolic space enables us to compress the hierarchical relationship information in a knowledge graph to very few dimensions compared to what is possible in Euclidean space. We report precision and recall results for preserving relationships between entity pairs for several input relationship graphs in order to show how well we can preserve graph distances when we embed a multi-layer hierarchy in hyperbolic space. In this task, "correct" means the following: If an entity pair in the input graph is one edge away, hyperbolic distance between final entity embeddings stays 1(&#177 0.01). For reference, each of these embeddings were produced using our combinatorial approach with 64 bits of precision and 10 dimensions, and the largest connected component for each relationship in WordNet was taken.
     <p>
     <br/>
       <center>
@@ -262,9 +262,11 @@
       <tr>
         <td width="50%" valign="middle">
           <heading>Visualizations</heading>
-        <p> We inlude some visualizations for our different embedding approaches in the following. Left hand-side is embedding a simple tree using only PyTorch-based optimization, which minimizes a loss function based on hyperbolic distance. For the same input graph, right-hand side is using our combinatorial construction, a deterministic algorithm that places tree vertices exactly. 
+        <p> In Euclidean space, circle circumference and disc area grow linearly and quadratically with radius, respectively. However, in hyperbolic space, they both grow exponentially with respect to radius, which allows particularly efficient embeddings for hierarchical structures like trees. MAP refers to mean average precision, which is a metric that captures how well each vertex's neighborhoods are preserved.
 
-        <p> In Euclidean space, circle circumference and disc area grow linearly and quadratically with radius, respectively. However, in hyperbolic space, they both grow exponentially with respect to radius, which allows particularly efficient embeddings for hierarchical structures like trees. MAP refers to mean average precision, which is a metric that captures how well each vertex's neighborhoods are preserved. We include detailed analysis on these algorithms in our <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>.
+        <p> We inlude some visualizations for our different embedding approaches in the following. Left hand-side is embedding a simple tree using only PyTorch-based optimization, which minimizes a loss function based on hyperbolic distance. For the same input graph, right-hand side is using <a href="https://dawn.cs.stanford.edu/2018/03/19/hyperbolics/">our combinatorial construction</a>, a deterministic algorithm that places tree vertices exactly. 
+
+        <p> Combinatorial construction first embeds the input graph into a tree, and then it embeds this tree into the <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_disk_model">Poincar&#233 ball</a>. Second step of the construction builds on <a href="https://homepages.inf.ed.ac.uk/rsarkar/papers/HyperbolicDelaunayFull.pdf">Sarkar's approach</a> for two-dimensional hyperbolic space. Combinatorial construction can embed tree-like input graphs in hyperbolic space with very low distortion in linear time, while PyTorch-based optimization can better handle incomplete information and it is more robust to different kinds of input graphs. In other words, the input graph doesn't necessarily have to be tree-like in order to be able to embedded with good MAP and distortion. You can also warm-start our PyTorch implementation with the embedding outputted from our combinatorial construction. We include detailed analysis on these algorithms in our <a href="https://arxiv.org/pdf/1804.03329.pdf">paper</a>.
 
       <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
 
@@ -282,7 +284,7 @@
         <td width="50%" valign="middle">
           <heading>Download</heading>
 
-          <p> You can download our 10-dimensional entity embeddings with 64-bit precision for selected relationships from WordNet, Wikidata and MusicBrainz in the following. All embeddings are in GloVe format, but we also include the scale factor for the embeddings in the top line. You can also find the preprocessing scripts to create edge lists for input graphs <a href="https://github.com/belizgunel/hyperE/tree/master/preprocess">here</a>.
+          <p> You can download our 10-dimensional entity embeddings with 64-bit precision for selected relationships from WordNet, Wikidata and MusicBrainz in the following. All embeddings are in GloVe format, but we also include the scale factor for the embeddings in the top line. You can also find the preprocessing scripts to create edge lists for input graphs <a href="preprocess/">here</a>.
           <p> WordNet: <a href="hyperE.wn.10d.zip">hyperE.wn.10d.zip</a> 
           <p> Wikidata: <a href="hyperE.wikidata.10d.zip">hyperE.Wikidata.10d.zip</a> 
           <p> MusicBrainz: <a href="hypere.music.10d.zip">hyperE.MusicBrainz.10d.zip</a>
